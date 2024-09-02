@@ -47,7 +47,6 @@ public class HotelResouce {
     }
 
     public static void bookARoom(String customerEmail, Room room, Date checkInDate, Date checkOutDate) {
-        System.out.println ("here" + customerEmail);
         try {
             reservationService.addReservation (customerEmail, room, checkInDate, checkOutDate);
 
@@ -57,7 +56,7 @@ public class HotelResouce {
     }
 
     public static Collection<Reservation> getCustomerReservations(String customerEmail) {
-        return null;
+        return reservationService.getCustomerReservations (customerEmail);
 
     }
 

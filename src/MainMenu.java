@@ -1,5 +1,6 @@
 import api.HotelResouce;
 import models.customer.Customer;
+import models.reserve.Reservation;
 import models.rooms.Room;
 
 import java.text.ParseException;
@@ -43,6 +44,7 @@ public class MainMenu {
                             break;
                         case '2':
                             System.out.println ("See my reservation");
+                            seeMyReservations ();
                             break;
                         case '3':
                             System.out.println ("Create account");
@@ -216,6 +218,25 @@ public class MainMenu {
             findAndReserveRoom ();
         }
 
+    }
+
+    // case2: see my reservations
+    private static void seeMyReservations() {
+        final Scanner scanner = new Scanner (System.in);
+
+        System.out.println ("Pls input your email:");
+        String email = scanner.nextLine ();
+        Collection<Reservation> myReservations = hotelResouce.getCustomerReservations (email);
+
+        if (myReservations == null || myReservations.isEmpty ()) {
+            System.out.println ("No reservations found.");
+            start ();
+        } else {
+            for (Reservation reservation : myReservations) {
+                System.out.println ("***");
+                System.out.println (reservation.toString ());
+            }
+        }
     }
 
     private static Date parseDate(String dateString) {

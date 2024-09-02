@@ -38,8 +38,8 @@ public class ReservationService {
 
     }
 
-    public Collection<Reservation> getCustomerReservations(Customer customer) {
-        return null;
+    public Collection<Reservation> getCustomerReservations(String customerEmail) {
+        return reservations.get (customerEmail);
 
     }
 
@@ -64,6 +64,4 @@ public class ReservationService {
         }
 
     }
-
-
 }

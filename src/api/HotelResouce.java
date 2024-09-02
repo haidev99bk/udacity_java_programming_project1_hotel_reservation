@@ -9,6 +9,7 @@ import services.ReservationService;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 public class HotelResouce {
     static CustomerService customerService = CustomerService.getInstance ();
@@ -58,6 +59,10 @@ public class HotelResouce {
     public static Collection<Reservation> getCustomerReservations(String customerEmail) {
         return reservationService.getCustomerReservations (customerEmail);
 
+    }
+
+    public static Collection<Collection<Reservation>> getAllReservations() {
+        return reservationService.getAllReservations ().values ();
     }
 
     public static Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {

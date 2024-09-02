@@ -43,7 +43,8 @@ public class ReservationService {
 
     }
 
-    public void printAllReservations() {
+    public Map<String, Collection<Reservation>> getAllReservations() {
+        return reservations;
     }
 
     public void addReservation(String customerEmail, Room room, Date checkInDate, Date checkOutDate) {

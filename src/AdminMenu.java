@@ -1,12 +1,14 @@
 import api.AdminResource;
 import api.HotelResouce;
 import models.customer.Customer;
+import models.reserve.Reservation;
 import models.rooms.IRoom;
 import models.rooms.Room;
 import models.rooms.enums.RoomType;
 
 import java.security.PublicKey;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AdminMenu {
@@ -55,7 +57,7 @@ public class AdminMenu {
                 }
                 case "3": {
                     System.out.println ("See all Reservations");
-
+                    seeAllReservations ();
                     break;
 
                 }
@@ -101,11 +103,22 @@ public class AdminMenu {
         for (Room room : rooms) {
             System.out.println (room.toString ());
         }
-        
+
         start ();
     }
 
-    public void seeAllReservations() {
+    // case3:
+    public static void seeAllReservations() {
+        Collection<Collection<Reservation>> reservations = hotelResouce.getAllReservations ();
+        if (reservations.isEmpty () || reservations == null) {
+            System.out.println ("There are no reservations");
+        } else {
+            for (Collection<Reservation> _reservations : reservations) {
+                for (Reservation res : _reservations) {
+                    System.out.println (res.toString ());
+                }
+            }
+        }
     }
 
     // case 4:

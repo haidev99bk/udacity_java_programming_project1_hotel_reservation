@@ -42,7 +42,7 @@ public class MainMenu {
         } catch (Exception e) {
             System.out.println (e.getMessage ());
         }
-        ;
+
     }
 
 

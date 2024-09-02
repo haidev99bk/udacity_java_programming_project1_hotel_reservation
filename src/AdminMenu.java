@@ -1,8 +1,14 @@
+import api.HotelResouce;
+import models.customer.Customer;
+
 import java.security.PublicKey;
 import java.util.Collection;
 import java.util.Scanner;
 
 public class AdminMenu {
+    // api
+    static final HotelResouce hotelResouce = HotelResouce.getInstance ();
+
     public static void start() {
         printMenu ();
 
@@ -33,6 +39,7 @@ public class AdminMenu {
             switch (select) {
                 case "1": {
                     System.out.println ("See all customer");
+                    seeAllCustomers ();
                     break;
                 }
                 case "2": {
@@ -42,6 +49,7 @@ public class AdminMenu {
                 }
                 case "3": {
                     System.out.println ("See all Reservations");
+
                     break;
 
                 }
@@ -64,7 +72,18 @@ public class AdminMenu {
         }
     }
 
-    public void seeAllCustomers() {
+    // case1:
+    public static void seeAllCustomers() {
+        Collection<Customer> customers = hotelResouce.getAllCustomer ();
+
+        if (customers.isEmpty ()) {
+            System.out.println ("There are no customers");
+        } else {
+            for (Customer customer : customers) {
+                System.out.println (customer.toString ());
+            }
+        }
+        start ();
     }
 
     public void seeAllRooms() {

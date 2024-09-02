@@ -36,7 +36,6 @@ public class CustomerService {
     }
 
     public Collection<Customer> getAllCustomers() {
-        return null;
-
+        return customers.values ();
     }
 }

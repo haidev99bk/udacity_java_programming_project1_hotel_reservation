@@ -5,14 +5,12 @@ import models.reserve.Reservation;
 import models.rooms.IRoom;
 import models.rooms.Room;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ReservationService {
     // database
     private final Map<String, Room> rooms = new HashMap<> ();
+    private final Map<String, Collection<Reservation>> reservations = new HashMap<> ();
 
     private static final ReservationService ref = new ReservationService ();
 
@@ -26,8 +24,8 @@ public class ReservationService {
     }
 
 
-    public IRoom getARoom(String roomId) {
-        return null;
+    public Room getARoom(String roomId) {
+        return rooms.get (roomId);
 
     }
 
@@ -46,6 +44,25 @@ public class ReservationService {
     }
 
     public void printAllReservations() {
+    }
+
+    public void addReservation(String customerEmail, Room room, Date checkInDate, Date checkOutDate) {
+        try {
+
+            Collection<Reservation> foundReservationOfEmail = reservations.get (customerEmail);
+
+            if (foundReservationOfEmail != null) {
+                foundReservationOfEmail.add (new Reservation (customerEmail, room, checkInDate, checkOutDate));
+            } else {
+                Collection<Reservation> reservationsOfEmail = new LinkedList<Reservation> ();
+                reservationsOfEmail.add (new Reservation (customerEmail, room, checkInDate, checkOutDate));
+                reservations.put (customerEmail, reservationsOfEmail);
+
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
 

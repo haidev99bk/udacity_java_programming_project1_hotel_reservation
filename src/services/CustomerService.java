@@ -32,7 +32,7 @@ public class CustomerService {
     }
 
     public Customer getCustomer(String email) {
-        return null;
+        return customers.get (email);
     }
 
     public Collection<Customer> getAllCustomers() {

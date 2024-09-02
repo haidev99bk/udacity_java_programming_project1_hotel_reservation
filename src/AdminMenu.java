@@ -1,5 +1,9 @@
+import api.AdminResource;
 import api.HotelResouce;
 import models.customer.Customer;
+import models.rooms.IRoom;
+import models.rooms.Room;
+import models.rooms.enums.RoomType;
 
 import java.security.PublicKey;
 import java.util.Collection;
@@ -8,6 +12,7 @@ import java.util.Scanner;
 public class AdminMenu {
     // api
     static final HotelResouce hotelResouce = HotelResouce.getInstance ();
+    static final AdminResource adminResource = AdminResource.getInstance ();
 
     public static void start() {
         printMenu ();
@@ -55,6 +60,7 @@ public class AdminMenu {
                 }
                 case "4": {
                     System.out.println ("Add a room");
+                    addARoom ();
                     break;
 
                 }
@@ -86,13 +92,80 @@ public class AdminMenu {
         start ();
     }
 
+
     public void seeAllRooms() {
     }
 
     public void seeAllReservations() {
     }
 
-    public void addARoom() {
+    // case 4:
+    public static void addARoom() {
+        try {
+            final Scanner scanner = new Scanner (System.in);
+            System.out.println ("Pls input room number:");
+            final String roomNumber = scanner.nextLine ();
+
+            System.out.println ("Pls input room price:");
+            final Double roomPrice = Double.parseDouble (scanner.nextLine ());
+
+            System.out.println ("Pls input room type: \n1 for single bed and 2 for double bed:");
+            RoomType type = null;
+            String input = scanner.nextLine ();
+
+            if (input.equals ("1")) {
+                type = RoomType.SINGLE;
+            }
+            if (input.equals ("2")) {
+                type = RoomType.DOUBLE;
+            }
+            if (type == null) {
+                throw new IllegalArgumentException ();
+            }
+
+            Room newRoom = new Room (roomNumber, roomPrice, type);
+            adminResource.addRoom (newRoom);
+
+            System.out.println ("Room added.");
+            start ();
+        } catch (NumberFormatException e) {
+            System.out.println ("Invalid input, pls input double value");
+            if (checkTryAgain ()) {
+                addARoom ();
+            } else {
+                start ();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println ("Invalid room type");
+            if (checkTryAgain ()) {
+                addARoom ();
+            } else {
+                start ();
+            }
+        }
+
+
+    }
+
+    private static boolean checkTryAgain() {
+        String select = "";
+        Scanner scanner = new Scanner (System.in);
+
+        do {
+            System.out.println ("\nTry again ? Y/N \n");
+            select = scanner.nextLine ();
+
+            if (select.equals ("Y")) {
+                return true;
+            }
+            if (select.equals ("N")) {
+                return false;
+            }
+
+            System.out.println ("Pls input 'Y' or 'N'.");
+            checkTryAgain ();
+        } while (select.charAt (0) != 'Y' && select.charAt (0) != 'N');
+        return false;
     }
 
 }

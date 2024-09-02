@@ -93,10 +93,10 @@ public class MainMenu {
 
     private static boolean checkTryAgain() {
         String select = "";
+        Scanner scanner2 = new Scanner (System.in);
 
         do {
             System.out.println ("\nTry again ? Y/N \n");
-            Scanner scanner2 = new Scanner (System.in);
             select = scanner2.nextLine ();
 
             if (select.equals ("Y")) {

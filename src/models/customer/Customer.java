@@ -12,6 +12,7 @@ public class Customer {
         Pattern pattern = Pattern.compile (REGEX_EMAIL_PATTERN);
 
         if (!pattern.matcher (email).matches ()) {
+            System.out.printf ("Invalid email %s", email);
             throw new IllegalArgumentException (email);
         } else {
             this.firstName = firstName;

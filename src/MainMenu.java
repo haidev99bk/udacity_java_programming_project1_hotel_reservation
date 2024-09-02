@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+interface Callback {
+
+}
+
 public class MainMenu {
 
     private static final HotelResouce hotelResouce = HotelResouce.getInstance ();
@@ -37,7 +41,7 @@ public class MainMenu {
                             System.out.println ("Find and ReserveRoom");
                             break;
                         case '2':
-                            System.out.println ("See my revervation");
+                            System.out.println ("See my reservation");
                             break;
                         case '3':
                             System.out.println ("Create account");
@@ -80,8 +84,35 @@ public class MainMenu {
             hotelResouce.createACustomer (email, firstName, lastName);
             start ();
         } catch (Exception e) {
+            Boolean isTryAgain = checkTryAgain ();
+            if (isTryAgain) {
+                createAccount ();
+            } else {
+                start ();
+            }
             System.out.println (e.getMessage ());
         }
+    }
+
+    private static boolean checkTryAgain() {
+        String select = "";
+
+        do {
+            System.out.println ("\nTry again ? Y/N \n");
+            Scanner scanner2 = new Scanner (System.in);
+            select = scanner2.nextLine ();
+
+            if (select.equals ("Y")) {
+                return true;
+            }
+            if (select.equals ("N")) {
+                return false;
+            }
+
+            System.out.println ("Pls input 'Y' or 'N'.");
+            checkTryAgain ();
+        } while (select.charAt (0) != 'Y' && select.charAt (0) != 'N');
+        return false;
     }
 
 

@@ -27,9 +27,8 @@ public class AdminResource {
         reservationService.addRoom (rooms);
     }
 
-    public Collection<IRoom> getAllRooms() {
-        return null;
-
+    public Collection<Room> getAllRooms() {
+        return reservationService.getAllRoom ();
     }
 
     public Collection<Customer> getAllCustomers() {

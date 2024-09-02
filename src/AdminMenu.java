@@ -49,6 +49,7 @@ public class AdminMenu {
                 }
                 case "2": {
                     System.out.println ("See all Rooms");
+                    seeAllRooms ();
                     break;
 
                 }
@@ -93,7 +94,15 @@ public class AdminMenu {
     }
 
 
-    public void seeAllRooms() {
+    // case2:
+    public static void seeAllRooms() {
+        Collection<Room> rooms = adminResource.getAllRooms ();
+
+        for (Room room : rooms) {
+            System.out.println (room.toString ());
+        }
+        
+        start ();
     }
 
     public void seeAllReservations() {
@@ -146,6 +155,7 @@ public class AdminMenu {
 
 
     }
+
 
     private static boolean checkTryAgain() {
         String select = "";

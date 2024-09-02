@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ReservationService {
     // database
-    private final Map<String, IRoom> rooms = new HashMap<> ();
+    private final Map<String, Room> rooms = new HashMap<> ();
 
     private static final ReservationService ref = new ReservationService ();
 
@@ -29,6 +29,10 @@ public class ReservationService {
     public IRoom getARoom(String roomId) {
         return null;
 
+    }
+
+    public Collection<Room> getAllRoom() {
+        return rooms.values ();
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {

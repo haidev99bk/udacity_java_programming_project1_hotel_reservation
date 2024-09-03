@@ -7,9 +7,11 @@ import models.rooms.Room;
 import services.CustomerService;
 import services.ReservationService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HotelResouce {
     static CustomerService customerService = CustomerService.getInstance ();
@@ -42,9 +44,23 @@ public class HotelResouce {
 
     }
 
-    public static Collection<Room> getAvailableRooms() {
+    public static Collection<Room> getAvailableRooms(Date checkinDate, Date checkoutDate) {
         // todo: update
-        return reservationService.getAllRoom ();
+        Collection<Collection<Reservation>> reservations = getAllReservations ();
+        Collection<Room> notAvailableRooms = new ArrayList<> ();
+
+        for (Collection<Reservation> reservation : reservations) {
+            for (Reservation r : reservation) {
+                Boolean isNotOverlaped = checkinDate.after (r.getCheckOutDate ()) || checkoutDate.before (r.getCheckInDate ());
+                if (!isNotOverlaped) {
+                    notAvailableRooms.add (r.getRoom ());
+                }
+            }
+        }
+
+        return reservationService.getAllRoom ().stream ().filter (room ->
+                notAvailableRooms.stream ().noneMatch (notAvailableRoom -> notAvailableRoom.equals (room))
+        ).collect (Collectors.toList ());
     }
 
     public static void bookARoom(String customerEmail, Room room, Date checkInDate, Date checkOutDate) {

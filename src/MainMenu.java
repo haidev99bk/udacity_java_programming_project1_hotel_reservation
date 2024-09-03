@@ -5,6 +5,7 @@ import models.rooms.Room;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
@@ -142,10 +143,40 @@ public class MainMenu {
 
             if (checkInDate != null && checkOutDate != null) {
                 // find available rooms
-                Collection<Room> availableRooms = hotelResouce.getAvailableRooms ();
-                for (Room room : availableRooms) {
-                    System.out.println (room.toString ());
+                Collection<Room> availableRooms = hotelResouce.getAvailableRooms (checkInDate, checkOutDate);
+                if (availableRooms.isEmpty ()) {
+                    // find alternative rooms
+                    Calendar calendar = Calendar.getInstance ();
+                    calendar.setTime (checkInDate);
+                    calendar.add (Calendar.DATE, 7);
+                    Date newCheckInDate = calendar.getTime ();
+
+                    calendar.setTime (checkOutDate);
+                    calendar.add (Calendar.DATE, 7);
+                    Date newCheckOutDate = calendar.getTime ();
+
+
+                    availableRooms = hotelResouce.getAvailableRooms (newCheckInDate, newCheckOutDate);
+
+                    if (availableRooms.isEmpty ()) {
+                        System.out.println ("There are no available rooms");
+                    } else {
+                        System.out.println ("There is not rooms at your expected time, but we fond available rooms when: Check-in Date:" + newCheckInDate + " Check-Out Date:" + newCheckOutDate);
+
+                        System.out.println ("Available rooms:");
+
+                        for (Room room : availableRooms) {
+                            System.out.println (room.toString ());
+                        }
+                    }
+                } else {
+                    System.out.println ("Available rooms:");
+
+                    for (Room room : availableRooms) {
+                        System.out.println (room.toString ());
+                    }
                 }
+
 
                 // start book
                 System.out.println ("Start booking ? Y/N \n");
